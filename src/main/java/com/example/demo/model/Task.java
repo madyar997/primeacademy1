@@ -15,6 +15,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long user_id;
     private LocalDate date;
     private String description;
     private boolean done;

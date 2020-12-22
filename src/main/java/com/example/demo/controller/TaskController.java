@@ -1,28 +1,39 @@
 package com.example.demo.controller;
 import com.example.demo.model.Task;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @RestController
 public class TaskController {
+    @Autowired
+    UserService service;
 
     @Autowired
     private TaskRepository taskRepository;
 
+
+
     @PostMapping("/tasks")
     public Task create(@RequestBody Task task) {
+        Long userId = service.getCurrentUser().getId();
+        task.setUser_id(userId);
         return taskRepository.save(task);
     }
 
     @GetMapping("/tasks")
     public Iterable<Task> getAll(){
-        return taskRepository.findAll();
+        Long userId = service.getCurrentUser().getId();
+        return taskRepository.findAllByUserId(userId);
     }
 
-    @GetMapping("/tasks/{id}z")
+    @GetMapping("/tasks/{id}")
     public Task getById(@PathVariable Long id){
-        return taskRepository.findById(id).orElse(null);
+        Long userId = service.getCurrentUser().getId();
+        return taskRepository.findByUserId(userId, id);
     }
 
     @PutMapping("/tasks/{id}")

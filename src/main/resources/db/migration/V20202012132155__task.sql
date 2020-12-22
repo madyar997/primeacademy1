@@ -1,5 +1,6 @@
 CREATE TABLE task (
                       id BIGSERIAL PRIMARY KEY,
+                      user_id INTEGER,
                       date DATE NOT NULL,
                       description TEXT,
                       done BOOLEAN NOT NULL DEFAULT FALSE);

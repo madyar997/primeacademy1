@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     UserService service;
-
     @Autowired
     UserDetailsService userDetailsService;
 

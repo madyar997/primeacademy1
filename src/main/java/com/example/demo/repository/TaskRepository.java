@@ -14,4 +14,11 @@ public interface TaskRepository extends PagingAndSortingRepository<Task, Long> {
     @Modifying
     @Query("UPDATE Task t SET t.done = true WHERE t.id = :id")
     void markAsDone(@Param("id") Long id);
+
+    @Query("SELECT t FROM Task t WHERE t.user_id = :user_id")
+    Iterable<Task> findAllByUserId(@Param("user_id") Long user_id);
+
+    @Query("SELECT t FROM Task t WHERE t.user_id = :user_id AND t.id = :id")
+    Task findByUserId(@Param("user_id") Long user_id, @Param("id") Long id);
+
 }
