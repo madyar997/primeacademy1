@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-
 import com.example.demo.model.Task;
 import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,32 +6,32 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TaskController {
-    private final TaskRepository taskRepository;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    @Autowired
+    private TaskRepository taskRepository;
 
     @PostMapping("/tasks")
-    public Task create(@RequestBody Task task1) {
-
-        return taskRepository.save(task1);
+    public Task create(@RequestBody Task task) {
+        return taskRepository.save(task);
     }
 
     @GetMapping("/tasks")
     public Iterable<Task> getAll(){
         return taskRepository.findAll();
     }
-    @GetMapping("/tasks/{id}")
+
+    @GetMapping("/tasks/{id}z")
     public Task getById(@PathVariable Long id){
         return taskRepository.findById(id).orElse(null);
     }
+
     @PutMapping("/tasks/{id}")
     public Task update(@PathVariable Long id,
                        @RequestBody Task task){
         task.setId(id);
         return taskRepository.save(task);
     }
+
     @DeleteMapping("/tasks/{id}")
     public void delete(@PathVariable Long id){
         taskRepository.deleteById(id);
